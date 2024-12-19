@@ -1,0 +1,6 @@
+numpy<2
+opencv-python
+torch>=1.7
+torchvision<0.17
+realesrgan
+basicsr

@@ -61,17 +61,20 @@ def main():
         print(f"Saved brightness & contrast adjusted image to {bc_output_path}")
 
         sf = -0.5
-        sat_adj = adjust_sat(bc_adj, sf)
+        sat_adj = adjust_sat(orig, sf)
         sat_output_path = os.path.join(output_folder, 'saturation', image)
         cv2.imwrite(sat_output_path, (sat_adj * 255).astype(np.uint8))
         print(f"Saved saturation adjusted image to {sat_output_path}")
 
-        sharp = sharpen(sat_adj)
+        sharp = sharpen(orig)
         sharp_output_path = os.path.join(output_folder, 'sharpen', image)
         cv2.imwrite(sharp_output_path, (sharp * 255).astype(np.uint8))
         print(f"Saved sharpened image to {sharp_output_path}")
 
-        final = sharp.copy()
+        temp1 = adjust_bc(orig, a, b)
+        temp2 = adjust_sat(temp1, sf)
+        temp3 = sharpen(temp2)
+        final = temp3.copy()
         final_output_path = os.path.join(output_folder, 'combined', image)
         cv2.imwrite(final_output_path, (final * 255).astype(np.uint8))
         print(f"Saved final combined image to {final_output_path}")
